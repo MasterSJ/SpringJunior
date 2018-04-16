@@ -5,10 +5,10 @@ import java.lang.reflect.Method;
 import com.google.common.base.Joiner;
 
 /**  
-* @ClassName: EnhanceMethod  
-* @Description: ÔöÇ¿·½·¨½á¹¹  
+* @ClassName: EnhanceField  
+* @Description: å¢žå¼ºæ–¹æ³•ç»“æž„
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public class EnhanceMethod {

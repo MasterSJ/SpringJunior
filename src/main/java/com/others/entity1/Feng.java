@@ -13,13 +13,13 @@ public class Feng {
     private Dong abcddd;
 
     public void test1() {
-        System.out.println("ÕâÊÇÀàFengµÄ·½·¨test2£¬²âÊÔ¡°Í¨¹ıÈ±Ê¡·½Ê½£¬ÊµÀı»¯ÆÕÍ¨¶ÔÏó¡±");
+        System.out.println("è¿™æ˜¯ç±»Fengçš„æ–¹æ³•test2ï¼Œæµ‹è¯•â€œé€šè¿‡ç¼ºçœæ–¹å¼ï¼Œå®ä¾‹åŒ–æ™®é€šå¯¹è±¡â€");
         abcddd.meth1();
     }
     
     @SjMethod
     public void test2() {
-        System.out.println("ÕâÊÇÀàFengµÄ·½·¨test1£¬²âÊÔ¡°Í¨¹ıÖ¸¶¨ÊµÏÖÀàÀ´ÊµÀı»¯½Ó¿Ú»ò³éÏóÀà¶ÔÏó¡±");
+        System.out.println("è¿™æ˜¯ç±»Fengçš„æ–¹æ³•test1ï¼Œæµ‹è¯•â€œé€šè¿‡æŒ‡å®šå®ç°ç±»æ¥å®ä¾‹åŒ–æ¥å£æˆ–æŠ½è±¡ç±»å¯¹è±¡â€");
         handler.doHandle();
     }
 }

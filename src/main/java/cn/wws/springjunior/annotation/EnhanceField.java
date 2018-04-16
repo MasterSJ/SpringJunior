@@ -8,9 +8,9 @@ import com.google.common.base.Joiner;
 
 /**  
 * @ClassName: EnhanceField  
-* @Description: ÔöÇ¿ÊôĞÔ½á¹¹
+* @Description: å¢å¼ºå±æ€§ç»“æ„
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public class EnhanceField {

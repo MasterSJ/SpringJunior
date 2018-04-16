@@ -7,9 +7,9 @@ import java.lang.annotation.Target;
 
 /**  
 * @ClassName: SjField  
-* @Description: ÆÕÍ¨Àà×¢½â
+* @Description: æ™®é€šç±»æ³¨è§£
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

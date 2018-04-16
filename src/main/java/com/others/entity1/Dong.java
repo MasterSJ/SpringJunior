@@ -11,6 +11,6 @@ public class Dong {
     
     @SjMethod
     public void meth1() {
-        System.out.println("这是类Dong的方法meth1");
+        System.out.println("杩欐槸绫籇ong鐨勬柟娉昺eth1");
     }
 }

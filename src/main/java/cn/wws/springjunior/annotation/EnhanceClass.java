@@ -4,9 +4,9 @@ import com.google.common.base.Joiner;
 
 /**  
 * @ClassName: EnhanceClass  
-* @Description: ÔöÇ¿Àà½á¹¹  
+* @Description: å¢å¼ºç±»ç»“æ„  
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public class EnhanceClass {

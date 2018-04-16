@@ -2,9 +2,9 @@ package cn.wws.springjunior.util;
 
 /**  
 * @ClassName: StringUtil  
-* @Description: ×Ö·û´®¹¤¾ßÀà
+* @Description: å­—ç¬¦ä¸²å·¥å…·ç±»
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public class StringUtil {

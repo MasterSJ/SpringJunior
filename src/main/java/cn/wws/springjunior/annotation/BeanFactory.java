@@ -11,16 +11,16 @@ import com.google.common.base.Joiner;
 
 /**  
 * @ClassName: InjectObject  
-* @Description: ×¢Èë¶ÔÏó  
+* @Description: æ³¨å…¥å¯¹è±¡  
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public class BeanFactory {
     /**    
-    * @Description: ¸øobjectÖĞ±»ÔöÇ¿±ê¼ÇµÄfield×¢Èë³õÊ¼»¯Öµ. 
+    * @Description: ç»™objectä¸­è¢«å¢å¼ºæ ‡è®°çš„fieldæ³¨å…¥åˆå§‹åŒ–å€¼. 
     * @author songjun  
-    * @date 2018Äê4ÔÂ13ÈÕ   
+    * @date 2018å¹´4æœˆ13æ—¥   
     * @param object
     * @return
     * @throws IllegalArgumentException
@@ -47,9 +47,9 @@ public class BeanFactory {
     }
     
     /**    
-    * @Description: Í¨¹ı×ÊÔ´Ãû³Æ»ñµÃÆä¶ÔÓ¦µÄclass. 
+    * @Description: é€šè¿‡èµ„æºåç§°è·å¾—å…¶å¯¹åº”çš„class. 
     * @author songjun  
-    * @date 2018Äê4ÔÂ11ÈÕ   
+    * @date 2018å¹´4æœˆ11æ—¥   
     * @param beanName
     * @return
     */ 
@@ -64,9 +64,9 @@ public class BeanFactory {
     }
     
     /**    
-    * @Description: Í¨¹ı×ÊÔ´Ãû³ÆµÃµ½¶ÔÓ¦µÄobject¶ÔÏó. 
+    * @Description: é€šè¿‡èµ„æºåç§°å¾—åˆ°å¯¹åº”çš„objectå¯¹è±¡. 
     * @author songjun  
-    * @date 2018Äê4ÔÂ12ÈÕ   
+    * @date 2018å¹´4æœˆ12æ—¥   
     * @param beanName
     * @return
     */ 
@@ -75,27 +75,27 @@ public class BeanFactory {
         Object obj = null;
         
         if (beanName != null && beanName.contains(".")) {
-            /**´«ÈëµÄbeanNameÎªÈ«Â·¾¶*/
+            /**ä¼ å…¥çš„beanNameä¸ºå…¨è·¯å¾„*/
             try {
                 clazz = Class.forName(beanName);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
         } else {
-            /**´«ÈëµÄbeanNameÎªÔöÇ¿±ê¼ÇµÄvalueÖµ*/
+            /**ä¼ å…¥çš„beanNameä¸ºå¢å¼ºæ ‡è®°çš„valueå€¼*/
             clazz = getEnhancedClass(beanName);
         }
         if (clazz == null) {
-            throw new RuntimeException(Joiner.on("").join(beanName, "×¢ÈëÊ§°Ü£¬Çë¼ì²éÊÇ·ñ°üº¬ÔÚÉ¨Ãè¸úÂ·¾¶", 
-                    AnnotationParse.getAppointedPackage(), "Ö®ÖĞ"));
+            throw new RuntimeException(Joiner.on("").join(beanName, "æ³¨å…¥å¤±è´¥ï¼Œè¯·æ£€æŸ¥æ˜¯å¦åŒ…å«åœ¨æ‰«æè·Ÿè·¯å¾„", 
+                    AnnotationParse.getAppointedPackage(), "ä¹‹ä¸­"));
         }
         try {
             if (clazz.isInterface()) {
-                /**ÊÇ½Ó¿Ú*/
-                throw new RuntimeException(Joiner.on("").join(beanName, "ÊÇ½Ó¿ÚÀàĞÍ£¬±ØĞëÔÚ×¢ÈëÊ±Ö¸¶¨Ò»¸öÊµÏÖÀà¶ÔÆäÊµÀı»¯"));
+                /**æ˜¯æ¥å£*/
+                throw new RuntimeException(Joiner.on("").join(beanName, "æ˜¯æ¥å£ç±»å‹ï¼Œå¿…é¡»åœ¨æ³¨å…¥æ—¶æŒ‡å®šä¸€ä¸ªå®ç°ç±»å¯¹å…¶å®ä¾‹åŒ–"));
             } else if (Modifier.isAbstract(clazz.getModifiers())) {
-                /**ÊÇ³éÏóÀà*/
-                throw new RuntimeException(Joiner.on("").join(beanName, "ÊÇ³éÏóÀà£¬±ØĞëÔÚ×¢ÈëÊ±Ö¸¶¨Ò»¸öÊµÏÖÀà¶ÔÆäÊµÀı»¯"));
+                /**æ˜¯æŠ½è±¡ç±»*/
+                throw new RuntimeException(Joiner.on("").join(beanName, "æ˜¯æŠ½è±¡ç±»ï¼Œå¿…é¡»åœ¨æ³¨å…¥æ—¶æŒ‡å®šä¸€ä¸ªå®ç°ç±»å¯¹å…¶å®ä¾‹åŒ–"));
             }
             obj = clazz.newInstance();
             injectField(obj);
