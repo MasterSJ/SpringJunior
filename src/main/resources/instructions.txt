@@ -1,0 +1,1 @@
+如果SjField标记接口或者抽象类的对象，则必须在SjField的value中指定其初始化类。
