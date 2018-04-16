@@ -8,9 +8,9 @@ import com.google.common.base.Joiner;
 
 /**  
 * @ClassName: AnnotationCollection  
-* @Description: ×¢½âÊÕ¼¯Æ÷  
+* @Description: æ³¨è§£æ”¶é›†å™¨  
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public final class AnnotationCollection {
