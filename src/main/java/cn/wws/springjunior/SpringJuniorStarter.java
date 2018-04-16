@@ -13,9 +13,9 @@ import cn.wws.springjunior.annotation.BeanFactory;
 
 /**  
 * @ClassName: SpringJuniorStarter  
-* @Description: Õû¸öÏîÄ¿Æô¶¯Æ÷  
+* @Description: æ•´ä¸ªé¡¹ç›®å¯åŠ¨å™¨  
 * @author songjun 
-* @date 2018Äê4ÔÂ11ÈÕ  
+* @date 2018å¹´4æœˆ11æ—¥  
 *    
 */
 public class SpringJuniorStarter {
@@ -25,15 +25,15 @@ public class SpringJuniorStarter {
     }
     
     public static void init() {
-        LOGGER.debug("¼ÓÔØÖ´ĞĞÆô¶¯Æ÷...");
-        /**¼ÓÔØÅäÖÃĞÅÏ¢*/
+        LOGGER.debug("åŠ è½½æ‰§è¡Œå¯åŠ¨å™¨...");
+        /**åŠ è½½é…ç½®ä¿¡æ¯*/
         AnnotationParse.init("com.others.entity1");
     }
     
     /**    
-    * @Description: ²âÊÔÈë¿Ú. 
+    * @Description: æµ‹è¯•å…¥å£. 
     * @author songjun  
-    * @date 2018Äê4ÔÂ11ÈÕ   
+    * @date 2018å¹´4æœˆ11æ—¥   
     * @param args
     */ 
     
