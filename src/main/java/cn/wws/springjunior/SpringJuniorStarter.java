@@ -20,26 +20,10 @@ import cn.wws.springjunior.annotation.BeanFactory;
 */
 public class SpringJuniorStarter {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringJuniorStarter.class);
-    static {
-        init();
-    }
     
-    public static void init() {
+    public static void init(String appointedPackageName) {
         LOGGER.debug("加载执行启动器...");
         /**加载配置信息*/
-        AnnotationParse.init("com.others.entity1");
-    }
-    
-    /**    
-    * @Description: 测试入口. 
-    * @author songjun  
-    * @date 2018年4月11日   
-    * @param args
-    */ 
-    
-    public static void main(String[] args) {
-        Feng feng = BeanFactory.getBean("feng");
-        feng.test1();
-        feng.test2();
+        AnnotationParse.init(appointedPackageName);
     }
 }
