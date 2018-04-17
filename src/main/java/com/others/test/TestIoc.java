@@ -16,11 +16,11 @@ public class TestIoc {
     
     public static void main(String[] args) {
         /**加载配置信息*/
-        SpringJuniorStarter.init("com.others.entity1");
+        SpringJuniorStarter.init("com.others");
         
         
-        Feng feng = BeanFactory.getBean("feng");
+        Feng feng = BeanFactory.getBean("fengsub");
         feng.test1();
-        feng.test2();
+        feng.test2();   //这种情况研究下怎么处理
     }
 }
