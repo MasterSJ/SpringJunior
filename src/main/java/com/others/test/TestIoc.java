@@ -3,8 +3,8 @@ package com.others.test;
 import com.others.entity1.Feng;
 
 import cn.wws.springjunior.SpringJuniorStarter;
-import cn.wws.springjunior.annotation.AnnotationParse;
-import cn.wws.springjunior.annotation.BeanFactory;
+import cn.wws.springjunior.ioc.AnnotationParse;
+import cn.wws.springjunior.ioc.BeanFactory;
 
 public class TestIoc {
     /**    

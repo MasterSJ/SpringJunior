@@ -1,4 +1,4 @@
-package cn.wws.springjunior.annotation;
+package cn.wws.springjunior.ioc;
 
 import java.lang.annotation.Annotation;
 import java.util.HashSet;

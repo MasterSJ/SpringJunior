@@ -1,4 +1,4 @@
-package cn.wws.springjunior.annotation;
+package cn.wws.springjunior.ioc;
 
 import com.google.common.base.Joiner;
 

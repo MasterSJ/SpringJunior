@@ -1,4 +1,4 @@
-package cn.wws.springjunior.annotation;
+package cn.wws.springjunior.ioc;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -25,6 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
+
+import cn.wws.springjunior.annotation.SjClass;
+import cn.wws.springjunior.annotation.SjField;
 
 
 /**  
