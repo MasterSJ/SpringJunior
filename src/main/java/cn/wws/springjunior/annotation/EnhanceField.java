@@ -42,12 +42,18 @@ public class EnhanceField {
 
     public static List<EnhanceField> getEnhanceFields(Object obj) {
         List<EnhanceField> fields = null;
+        Class<?> clazz = obj.getClass();
+        /**遍历增强标记属性*/
         for (EnhanceField enF : AnnotationParse.getEnhanceFieldMap().values()) {
-            if (obj.getClass().getName().equals(enF.getParentClassName())) {
-                if (fields == null) {
-                    fields = new ArrayList<EnhanceField>();
+            /**遍历所有祖先类，直到查到object*/
+            while (!clazz.getName().equals("java.lang.Object")) {
+                if (clazz.getName().equals(enF.getParentClassName())) {
+                    if (fields == null) {
+                        fields = new ArrayList<EnhanceField>();
+                    }
+                    fields.add(enF);
                 }
-                fields.add(enF);
+                clazz = clazz.getSuperclass();
             }
         }
         return fields;
