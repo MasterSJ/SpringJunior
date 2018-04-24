@@ -9,6 +9,8 @@ import org.apache.commons.lang.StringUtils;
 
 import com.google.common.base.Joiner;
 
+import cn.wws.springjunior.annotation.AnnotationParse;
+
 /**  
 * @ClassName: InjectObject  
 * @Description: 注入对象  

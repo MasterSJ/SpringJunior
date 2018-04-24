@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.google.common.base.Joiner;
 
+import cn.wws.springjunior.annotation.AnnotationParse;
+
 /**  
 * @ClassName: EnhanceField  
 * @Description: 增强属性结构

@@ -8,7 +8,7 @@ import com.others.entity1.AbstractHandler;
 import com.others.entity1.Feng;
 import com.others.entity1.Handler;
 
-import cn.wws.springjunior.ioc.AnnotationParse;
+import cn.wws.springjunior.annotation.AnnotationParse;
 import cn.wws.springjunior.ioc.BeanFactory;
 
 /**  
