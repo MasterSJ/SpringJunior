@@ -14,9 +14,18 @@ import com.google.common.base.Joiner;
 *    
 */
 public final class AnnotationCollection {
+    /**SjClass注解标记类的集合*/  
     private Set<Class<? extends Annotation>> classAnnotations;
+    /**SjMethod注解标记类的集合*/  
     private Set<Class<? extends Annotation>> methodAnnotations;
+    /**SjField注解标记类的集合*/  
     private Set<Class<? extends Annotation>> fieldAnnotations;
+    /**SjPointCut注解标记类的集合*/  
+    private Set<Class<? extends Annotation>> pointCutAnnotations;
+    /**SjBefore注解标记类的集合*/  
+    private Set<Class<? extends Annotation>> beforeAnnotations;
+    /**SjAfter注解标记类的集合*/  
+    private Set<Class<? extends Annotation>> afterAnnotations;
     
     private static AnnotationCollection singleInstance;
     
@@ -24,6 +33,9 @@ public final class AnnotationCollection {
         classAnnotations = new HashSet<Class<? extends Annotation>>();
         methodAnnotations = new HashSet<Class<? extends Annotation>>();
         fieldAnnotations = new HashSet<Class<? extends Annotation>>();
+        pointCutAnnotations = new HashSet<Class<? extends Annotation>>();
+        beforeAnnotations = new HashSet<Class<? extends Annotation>>();
+        afterAnnotations = new HashSet<Class<? extends Annotation>>();
     }
     
     public static AnnotationCollection getInstance() {
