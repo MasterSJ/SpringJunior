@@ -1,6 +1,3 @@
-/**
- * 
- */
 package cn.wws.springjunior.annotation;
 
 import java.lang.annotation.ElementType;
@@ -15,8 +12,8 @@ import java.lang.annotation.Target;
 * @date 2018年4月24日  
 *    
 */
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SjPointCut {
+public @interface SjAspect {
     String value();
 }
