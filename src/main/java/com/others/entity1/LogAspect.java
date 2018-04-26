@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.wws.springjunior.annotation.SjAspect;
+import cn.wws.springjunior.annotation.SjActiveAspect;
 import cn.wws.springjunior.aop.AbstractCglibInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 
@@ -15,7 +15,7 @@ import net.sf.cglib.proxy.MethodProxy;
 * @author songjun 
 * @date 2018年4月25日  
 */
-@SjAspect("LogAspect")
+@SjActiveAspect("LogAspect")
 public class LogAspect extends AbstractCglibInterceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCglibInterceptor.class);
     @Override
