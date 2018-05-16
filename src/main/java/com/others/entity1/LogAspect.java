@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.wws.springjunior.annotation.SjActiveAspect;
-import cn.wws.springjunior.aop.AbstractCglibInterceptor;
-import net.sf.cglib.proxy.MethodProxy;
+import cn.wws.springjunior.annotation.SjAfter;
+import cn.wws.springjunior.annotation.SjAspect;
+import cn.wws.springjunior.annotation.SjBefore;
 
 /**  
 * @ClassName: LogAspect  
@@ -15,28 +15,18 @@ import net.sf.cglib.proxy.MethodProxy;
 * @author songjun 
 * @date 2018年4月25日  
 */
-@SjActiveAspect("LogAspect")
-public class LogAspect extends AbstractCglibInterceptor {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCglibInterceptor.class);
-    @Override
-    public boolean before(Method method, Object[] args) {
-        LOGGER.info("------------统一打印日志，入参={}", args);
+@SjAspect("LogAspect")
+public class LogAspect {
+    @SjBefore("com.others.entity1.Feng.test1()")
+    public boolean before() {
+        System.out.println("出门之前，洗脸刷牙");
         return false;
     }
 
-    @Override
+    @SjAfter("com.others.entity1.Feng.test1()")
     public boolean after(Method method, Object[] args) {
-        LOGGER.info("------------统一打印日志，返回值={}", args);
+        System.out.println("到达公司，开始上班");
         return false;
     }
     
-    @Override   /**此方法不是必须要实现覆盖的*/
-    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-        boolean b = before(method, args);    
-        Object object = proxy.invokeSuper(obj, args);  
-        Object[] objs = new Object[1];
-        objs[0] = object;
-        boolean a = after(method, objs);   
-        return object;  
-    }
 }

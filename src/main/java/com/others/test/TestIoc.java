@@ -19,8 +19,8 @@ public class TestIoc {
         SpringJuniorStarter.init("com.others");
         
         
-        Feng feng = BeanFactory.getBean("fengsub");
+        Feng feng = BeanFactory.getBean("feng");
         feng.test1();
-        feng.test2();   //这种情况研究下怎么处理
+        //feng.test2();   //这种情况研究下怎么处理
     }
 }

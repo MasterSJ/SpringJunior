@@ -57,7 +57,7 @@ public class BeanFactory {
     */ 
     public static Class<?> getEnhancedClass(String beanName) {
         Class<?> clazz = null;
-        Map<String, EnhanceClass> map = AnnotationParse.getEnhanceClassMap();
+        Map<String, EnhanceClass> map = AnnotationParse.getSjClassMap();
         EnhanceClass enhanCla = map.get(beanName);
         if (enhanCla != null) {
             clazz = enhanCla.getAnnotationTarget();

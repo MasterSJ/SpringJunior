@@ -7,13 +7,13 @@ import java.lang.annotation.Target;
 
 /**  
 * @ClassName: SjPointCut  
-* @Description: 主动切面注解  
+* @Description: 切面注解  
 * @author songjun 
 * @date 2018年4月24日  
 *    
 */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SjActiveAspect {
+public @interface SjAspect {
     String value();
 }

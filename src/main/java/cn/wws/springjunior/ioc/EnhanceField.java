@@ -21,39 +21,16 @@ public class EnhanceField {
     private String parentClassName;
     private String annotationValue;
     
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static List<EnhanceField> getEnhanceFields(Object obj) {
         List<EnhanceField> fields = null;
-        Class<?> clazz = obj.getClass();
+        Class<?> clazz = null;
         /**遍历增强标记属性*/
-        for (EnhanceField enF : AnnotationParse.getEnhanceFieldMap().values()) {
+        for (EnhanceField enF : AnnotationParse.getSjFieldMap().values()) {
             /**遍历所有祖先类，直到查到object*/
-            while (!clazz.getName().equals("java.lang.Object")) {
-                if (clazz.getName().equals(enF.getParentClassName())) {
-                    if (fields == null) {
-                        fields = new ArrayList<EnhanceField>();
-                    }
-                    fields.add(enF);
+            for (clazz = obj.getClass(); !clazz.getName().equals("java.lang.Object"); ) {
+                if (fieldBelongClass(enF, clazz)) {
+                    addField(fields, enF);
+                    break;
                 }
                 clazz = clazz.getSuperclass();
             }
@@ -61,6 +38,17 @@ public class EnhanceField {
         return fields;
     }
     
+    /*field是否属于此class*/
+    private static boolean fieldBelongClass(EnhanceField enF, Class<?> clazz) {
+        return clazz.getName().equals(enF.getParentClassName());
+    }
+    
+    private static void addField(List<EnhanceField> fields, EnhanceField enf) {
+        if (fields == null) {
+            fields = new ArrayList<EnhanceField>();
+        }
+        fields.add(enf);
+    }
     
     
     

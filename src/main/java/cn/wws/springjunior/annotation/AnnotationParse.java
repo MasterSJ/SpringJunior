@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
-import cn.wws.springjunior.ioc.AnnotationCollection;
 import cn.wws.springjunior.ioc.EnhanceClass;
 import cn.wws.springjunior.ioc.EnhanceField;
 import cn.wws.springjunior.ioc.EnhanceMethod;
@@ -44,24 +43,30 @@ public class AnnotationParse {
     /**原始包根路径*/
     private static final String ORIGIN_ROOT_PACKAGE = "cn.wws.springjunior";
     /**用户指定包根路径*/
-    private static String appointedPackage;
-    /**被增强标记的类*/
-    private static Map<String, EnhanceClass> enhanceClassMap = new HashMap<String, EnhanceClass>();
-    /**被增强标记的方法*/
-    private static Map<String, EnhanceMethod> enhanceMethodMap = new HashMap<String, EnhanceMethod>();
-    /**被增强标记的属性*/
-    private static Map<String, EnhanceField> enhanceFieldMap = new HashMap<String, EnhanceField>();
+    private static String appointedPackage = "";
+    /**被sjClass注解标记的类*/
+    private static Map<String, EnhanceClass> sjClassMap = new HashMap<String, EnhanceClass>();
+    /**被sjMethod注解标记的方法*/
+    private static Map<String, EnhanceMethod> sjMethodMap = new HashMap<String, EnhanceMethod>();
+    /**被sjField注解标记的属性*/
+    private static Map<String, EnhanceField> sjFieldMap = new HashMap<String, EnhanceField>();
+    /**被sjBefore注解标记的方法*/
+    private static Map<String, EnhanceMethod> sjBeforeMap = new HashMap<String, EnhanceMethod>();
+    /**被sjAfter注解标记的方法*/
+    private static Map<String, EnhanceMethod> sjAfterMap = new HashMap<String, EnhanceMethod>();
+    /**被sjAspect注解标记的方法*/
+    private static Map<String, EnhanceClass> sjAspectMap = new HashMap<String, EnhanceClass>();
     
-    public static Map<String, EnhanceClass> getEnhanceClassMap() {
-        return enhanceClassMap;
+    public static Map<String, EnhanceClass> getSjClassMap() {
+        return sjClassMap;
     }
     
-    public static Map<String, EnhanceMethod> getEnhanceMethodMap() {
-        return enhanceMethodMap;
+    public static Map<String, EnhanceMethod> getSjMethodMap() {
+        return sjMethodMap;
     }
     
-    public static Map<String, EnhanceField> getEnhanceFieldMap() {
-        return enhanceFieldMap;
+    public static Map<String, EnhanceField> getSjFieldMap() {
+        return sjFieldMap;
     }
     
     public static boolean init(String appointedPackageName) {
@@ -76,6 +81,8 @@ public class AnnotationParse {
                 /**合并原始根包路径和指定包根路径扫描到的class*/
                 mergeList(allClassList, appoitedAllClassList);
                 appoitedAllClassList = null;
+            } else {
+                throw new RuntimeException("扫描根路径为空，必须设置");
             }
             /**获取所有class中有增强标记的资源*/
             fillEnhance(allClassList);
@@ -96,7 +103,7 @@ public class AnnotationParse {
      * @throws ClassNotFoundException
      */ 
     private static void fillEnhance(List<Class<?>> list) {
-        fillEnhanceClassMap(list);
+        fillSjClassMap(list);
         fillEnhanceMethodMap(list);
         fillEnhanceFieldMap(list);
     }
@@ -225,7 +232,7 @@ public class AnnotationParse {
                   }
               }
           }
-          LOGGER.debug("AnnotationCollection={}", annotationCollection);
+          LOGGER.debug("annotationCollection={}", annotationCollection);
       }
       
     /**    
@@ -236,13 +243,13 @@ public class AnnotationParse {
     * @param set
     * @throws ClassNotFoundException
     */ 
-    public static void fillEnhanceClassMap(List<Class<?>> list) {
+    public static void fillSjClassMap(List<Class<?>> list) {
         Set<Class<? extends Annotation>> classAnnotationSet = AnnotationCollection.getInstance().getClassAnnotation();
         for (Class<?> clazz : list) {
           for (Class<? extends Annotation> annotation : classAnnotationSet) {
               if (clazz.isAnnotationPresent(annotation)) {
                   EnhanceClass enhanceClass = new EnhanceClass(annotation.getName(), clazz);
-                  if ("cn.wws.springjunior.annotation.SjClass".equals(annotation.getName())) {
+                  if (SjClass.class.getName().equals(annotation.getName())) {
                       SjClass sj = clazz.getAnnotation(SjClass.class);
                       String resourceName = sj.value();
                       if (resourceName == null || resourceName.trim().equals("")) {
@@ -251,16 +258,31 @@ public class AnnotationParse {
                           throw new RuntimeException(Joiner.on("").join("资源名称命名不能包含\".\"：", clazz.getName()));
                       }
                       enhanceClass.setAnnotationValue(resourceName);
-                      if (enhanceClassMap.get(resourceName) != null) {
+                      if (sjClassMap.get(resourceName) != null) {
                           throw new RuntimeException(Joiner.on("").join("资源名称命名重复：", clazz.getName(), " & ", 
-                                  enhanceClassMap.get(resourceName).getAnnotationTarget().getName()));
+                                  sjClassMap.get(resourceName).getAnnotationTarget().getName()));
                       }
-                      enhanceClassMap.put(resourceName, enhanceClass);
+                      sjClassMap.put(resourceName, enhanceClass);
+                  } else if (SjAspect.class.getName().equals(annotation.getName())) {
+                      SjAspect sj = clazz.getAnnotation(SjAspect.class);
+                      String resourceName = sj.value();
+                      if (resourceName == null || resourceName.trim().equals("")) {
+                          throw new RuntimeException(Joiner.on("").join("资源名称命名不能为空：", clazz.getName()));
+                      } else if (resourceName.contains(".")) {
+                          throw new RuntimeException(Joiner.on("").join("资源名称命名不能包含\".\"：", clazz.getName()));
+                      }
+                      enhanceClass.setAnnotationValue(resourceName);
+                      if (sjAspectMap.get(resourceName) != null) {
+                          throw new RuntimeException(Joiner.on("").join("资源名称命名重复：", clazz.getName(), " & ", 
+                                  sjAspectMap.get(resourceName).getAnnotationTarget().getName()));
+                      }
+                      sjAspectMap.put(resourceName, enhanceClass);
                   }
               }
           }
         }
-        LOGGER.debug("enhanceClassMap={}", enhanceClassMap);
+        LOGGER.debug("sjClassMap={}", sjClassMap);
+        LOGGER.debug("sjAspectMap={}", sjAspectMap);
     }
     
     /**    
@@ -277,14 +299,24 @@ public class AnnotationParse {
             for (Method method : clazz.getDeclaredMethods()) {
                 for (Class<? extends Annotation> annotation : methodAnnotationSet) {
                     if (method.isAnnotationPresent(annotation)) {
-                        EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
-                        enhanceMethodMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
+                        if (annotation.getName().equals(SjMethod.class.getName())) {
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
+                            sjMethodMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
+                        } else if (annotation.getName().equals(SjBefore.class.getName())) {
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
+                            sjBeforeMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
+                        } else if (annotation.getName().equals(SjAfter.class.getName())) {
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
+                            sjAfterMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
+                        }
                     }
                 }
             }
             
         }
-        LOGGER.debug("enhanceMethodMap={}", enhanceMethodMap);
+        LOGGER.debug("sjMethodMap={}", sjMethodMap);
+        LOGGER.debug("sjBeforeMap={}", sjBeforeMap);
+        LOGGER.debug("sjAfterMap={}", sjAfterMap);
     }
     
     /**    
@@ -301,20 +333,22 @@ public class AnnotationParse {
             for (Field field : clazz.getDeclaredFields()) {
                 for (Class<? extends Annotation> annotation : fieldAnnotationSet) {
                     if (field.isAnnotationPresent(annotation)) {
-                        SjField sj = field.getAnnotation(SjField.class);
-                        String resourceName = sj.value();
-                        if (resourceName != null && resourceName.contains(".")) {
-                            throw new RuntimeException(Joiner.on("").join("资源名称命名不能包含\".\"：", clazz.getName()));
+                        if (annotation.getName().equals(SjField.class.getName())) {
+                            SjField sj = field.getAnnotation(SjField.class);
+                            String resourceName = sj.value();
+                            if (resourceName != null && resourceName.contains(".")) {
+                                throw new RuntimeException(Joiner.on("").join("资源名称命名不能包含\".\"：", clazz.getName()));
+                            }
+                            checkJavaBaseType(clazz, field);
+                            EnhanceField enhanceField = new EnhanceField(annotation.getName(), field, clazz.getName(), resourceName);
+                            sjFieldMap.put(Joiner.on("").join(clazz.getName(), ".", field.getName()), enhanceField);
                         }
-                        checkJavaBaseType(clazz, field);
-                        EnhanceField enhanceField = new EnhanceField(annotation.getName(), field, clazz.getName(), resourceName);
-                        enhanceFieldMap.put(Joiner.on("").join(clazz.getName(), ".", field.getName()), enhanceField);
                     }
                 }
             }
             
         }
-        LOGGER.debug("enhanceFieldMap={}", enhanceFieldMap);
+        LOGGER.debug("sjFieldMap={}", sjFieldMap);
     }
     
     /**    

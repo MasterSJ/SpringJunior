@@ -13,13 +13,11 @@ public class Feng {
     @SjField
     private Dong abcddd;
 
-    @SjBefore("preLogin")
     public void test1() {
         System.out.println("这是类Feng的方法test1，测试“通过缺省方式，实例化普通对象”");
         abcddd.meth1();
     }
     
-    @SjAfter("afterLogin")
     public void test2() {
         System.out.println("这是类Feng的方法test2，测试“通过指定实现类来实例化接口或抽象类对象”");
         handler.doHandle();
