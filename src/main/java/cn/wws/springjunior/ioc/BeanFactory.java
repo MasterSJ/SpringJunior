@@ -1,6 +1,7 @@
 package cn.wws.springjunior.ioc;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import com.google.common.base.Joiner;
 
 import cn.wws.springjunior.annotation.AnnotationParse;
+import cn.wws.springjunior.aop.CGLIBProxy;
 
 /**  
 * @ClassName: InjectObject  
@@ -100,13 +102,41 @@ public class BeanFactory {
                 throw new RuntimeException(Joiner.on("").join(beanName, "是抽象类，必须在注入时指定一个实现类对其实例化"));
             }
             obj = clazz.newInstance();
+            /*处理aop关系，这一步要在injectField(obj)之前执行*/
+            obj = doAopHandle(obj);
+            /*给field注入值*/
             injectField(obj);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return (T)obj;
+        return (T) obj;
+    }
+    
+    /**    
+    * @Description: 处理aop.
+    * 这里判断是否需要做aop处理，跟aop处理中判断处理哪一个方法差不多，后续考虑简化一下 
+    * @author songjun  
+    * @date 2018年5月17日   
+    * @param obj
+    * @return
+    */ 
+    private static Object doAopHandle(Object obj) {
+        Map<String, EnhanceMethod> methodMap = AnnotationParse.getSjBeforeMap();
+        for (Map.Entry<String, EnhanceMethod> map : methodMap.entrySet()) {
+            String toIntance = map.getValue().getAnnotationValue();
+            int offset = toIntance.lastIndexOf(".");
+            String className = toIntance.substring(0, offset);
+            if (className.equals(obj.getClass().getName())) {
+                try {
+                    return new CGLIBProxy(obj).getProxy();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return obj;
     }
     
 }

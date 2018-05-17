@@ -69,6 +69,14 @@ public class AnnotationParse {
         return sjFieldMap;
     }
     
+    public static Map<String, EnhanceMethod> getSjBeforeMap() {
+        return sjBeforeMap;
+    }
+    
+    public static Map<String, EnhanceMethod> getSjAfterMap() {
+        return sjAfterMap;
+    }
+    
     public static boolean init(String appointedPackageName) {
         boolean ret = true;
         try {
@@ -103,7 +111,7 @@ public class AnnotationParse {
      * @throws ClassNotFoundException
      */ 
     private static void fillEnhance(List<Class<?>> list) {
-        fillSjClassMap(list);
+        fillEnhanceClassMap(list);
         fillEnhanceMethodMap(list);
         fillEnhanceFieldMap(list);
     }
@@ -243,7 +251,7 @@ public class AnnotationParse {
     * @param set
     * @throws ClassNotFoundException
     */ 
-    public static void fillSjClassMap(List<Class<?>> list) {
+    public static void fillEnhanceClassMap(List<Class<?>> list) {
         Set<Class<? extends Annotation>> classAnnotationSet = AnnotationCollection.getInstance().getClassAnnotation();
         for (Class<?> clazz : list) {
           for (Class<? extends Annotation> annotation : classAnnotationSet) {
@@ -303,10 +311,14 @@ public class AnnotationParse {
                             EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
                             sjMethodMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
                         } else if (annotation.getName().equals(SjBefore.class.getName())) {
-                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
+                            SjBefore sj = method.getAnnotation(SjBefore.class);
+                            String methodValue = sj.value();
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), methodValue, method);
                             sjBeforeMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
                         } else if (annotation.getName().equals(SjAfter.class.getName())) {
-                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), method);
+                            SjAfter sj = method.getAnnotation(SjAfter.class);
+                            String methodValue = sj.value();
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), methodValue, method);
                             sjAfterMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
                         }
                     }

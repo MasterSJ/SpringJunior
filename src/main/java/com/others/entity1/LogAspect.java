@@ -17,16 +17,14 @@ import cn.wws.springjunior.annotation.SjBefore;
 */
 @SjAspect("LogAspect")
 public class LogAspect {
-    @SjBefore("com.others.entity1.Feng.test1()")
-    public boolean before() {
-        System.out.println("出门之前，洗脸刷牙");
-        return false;
+    @SjBefore("com.others.entity1.BeanOfAopTest.sing")
+    public void before(Object[] args) {
+        System.out.println(args[0] + "和" + args[1] + "唱歌之前，先清清嗓子");
     }
 
-    @SjAfter("com.others.entity1.Feng.test1()")
-    public boolean after(Method method, Object[] args) {
-        System.out.println("到达公司，开始上班");
-        return false;
+    @SjAfter("com.others.entity1.BeanOfAopTest.sing()")
+    public void after(Object[] args) {
+        System.out.println(args[0] + "和" + args[1] + "唱完啦");
     }
     
 }

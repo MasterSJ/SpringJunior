@@ -18,9 +18,9 @@ public class TestIoc {
         /**加载配置信息*/
         SpringJuniorStarter.init("com.others");
         
-        
+        System.out.println("测试ioc");
         Feng feng = BeanFactory.getBean("feng");
         feng.test1();
-        //feng.test2();   //这种情况研究下怎么处理
+        feng.test2();
     }
 }
