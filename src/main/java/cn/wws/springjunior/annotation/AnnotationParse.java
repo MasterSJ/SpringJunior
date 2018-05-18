@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 
+import cn.wws.springjunior.SjConfigure;
 import cn.wws.springjunior.ioc.EnhanceClass;
 import cn.wws.springjunior.ioc.EnhanceField;
 import cn.wws.springjunior.ioc.EnhanceMethod;
@@ -39,6 +40,7 @@ import cn.wws.springjunior.ioc.EnhanceMethod;
 *    
 */
 public class AnnotationParse {
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationParse.class);
     /**原始包根路径*/
     private static final String ORIGIN_ROOT_PACKAGE = "cn.wws.springjunior";
@@ -56,6 +58,10 @@ public class AnnotationParse {
     private static Map<String, EnhanceMethod> sjAfterMap = new HashMap<String, EnhanceMethod>();
     /**被sjAspect注解标记的方法*/
     private static Map<String, EnhanceClass> sjAspectMap = new HashMap<String, EnhanceClass>();
+    
+    static {
+        init(SjConfigure.getAppointedPackageName());
+    }
     
     public static Map<String, EnhanceClass> getSjClassMap() {
         return sjClassMap;
