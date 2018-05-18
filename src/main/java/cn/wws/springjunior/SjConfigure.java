@@ -6,7 +6,7 @@ import java.util.Properties;
 /**  
 * @ClassName: SjConfigure  
 * @Description: 配置信息管理  
-* appointedPackageName: 执行由SJ管理的包路径
+* appointedPackageName: 指定由SJ管理的包路径
 * @author songjun 
 * @date 2018年5月18日  
 *    
