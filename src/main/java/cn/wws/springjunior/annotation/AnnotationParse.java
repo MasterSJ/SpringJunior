@@ -40,8 +40,6 @@ import cn.wws.springjunior.ioc.EnhanceMethod;
 public class AnnotationParse {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationParse.class);
-    /**原始包根路径*/
-    private static final String ORIGIN_ROOT_PACKAGE = "cn.wws.springjunior";
     /**用户指定包根路径*/
     private static String appointedPackage = "";
     /**被sjClass注解标记的类*/
