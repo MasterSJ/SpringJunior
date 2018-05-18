@@ -101,7 +101,7 @@ public class AnnotationParse {
             allClassList = null;
         } catch (Exception e) {
             ret = false;
-            throw e;
+            LOGGER.error("初始化异常，e={}", e);
         } 
         return ret;
     }
