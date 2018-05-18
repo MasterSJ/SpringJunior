@@ -39,7 +39,8 @@ public class EnhanceClass {
     }
     
     public String toString() {
-        return Joiner.on("").join("{annotationName=", annotationName, "; annotationValue=", annotationValue, 
+        return Joiner.on("").join("{annotationName=", annotationName, "; annotationValue=", 
+                annotationValue == null ? "null" : annotationValue, 
                 "; annotationTarget=", annotationTarget, "}");
     }
 }

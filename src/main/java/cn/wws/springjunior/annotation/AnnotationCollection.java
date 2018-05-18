@@ -25,8 +25,14 @@ public final class AnnotationCollection {
     
     private AnnotationCollection() {
         classAnnotations = new HashSet<Class<? extends Annotation>>();
+        classAnnotations.add(SjClass.class);
+        classAnnotations.add(SjAspect.class);
         methodAnnotations = new HashSet<Class<? extends Annotation>>();
+        methodAnnotations.add(SjMethod.class);
+        methodAnnotations.add(SjBefore.class);
+        methodAnnotations.add(SjAfter.class);
         fieldAnnotations = new HashSet<Class<? extends Annotation>>();
+        fieldAnnotations.add(SjField.class);
     }
     
     public static AnnotationCollection getInstance() {
@@ -41,25 +47,13 @@ public final class AnnotationCollection {
         }
         return singleInstance;
     }
-
-    public void putClassAnnotation(Class<? extends Annotation> clazz) {
-        classAnnotations.add(clazz);
-    }
     
     public Set<Class<? extends Annotation>> getClassAnnotation() {
         return classAnnotations;
     }
     
-    public void putMethodAnnotation(Class<? extends Annotation> clazz) {
-        methodAnnotations.add(clazz);
-    }
-    
     public Set<Class<? extends Annotation>> getMethodAnnotation() {
         return methodAnnotations;
-    }
-    
-    public void putFieldAnnotation(Class<? extends Annotation> clazz) {
-        fieldAnnotations.add(clazz);
     }
     
     public Set<Class<? extends Annotation>> getFieldAnnotation() {

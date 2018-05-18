@@ -3,6 +3,9 @@ package cn.wws.springjunior;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**  
 * @ClassName: SjConfigure  
 * @Description: 配置信息管理  
@@ -12,6 +15,7 @@ import java.util.Properties;
 *    
 */
 public class SjConfigure {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SjConfigure.class);
     private static Properties props;
     private static String appointedPackageName;
     static {
@@ -25,6 +29,7 @@ public class SjConfigure {
             InputStreamReader inputStream = new InputStreamReader(
                     SjConfigure.class.getClassLoader().getResourceAsStream("sj.properties"), "UTF-8");
             props.load(inputStream);
+            LOGGER.debug("configur info {}", props);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
