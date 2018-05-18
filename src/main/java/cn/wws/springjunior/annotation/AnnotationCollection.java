@@ -25,8 +25,14 @@ public final class AnnotationCollection {
     
     private AnnotationCollection() {
         classAnnotations = new HashSet<Class<? extends Annotation>>();
+        putClassAnnotation(SjClass.class);
+        putClassAnnotation(SjAspect.class);
         methodAnnotations = new HashSet<Class<? extends Annotation>>();
+        putMethodAnnotation(SjMethod.class);
+        putMethodAnnotation(SjBefore.class);
+        putMethodAnnotation(SjAfter.class);
         fieldAnnotations = new HashSet<Class<? extends Annotation>>();
+        putFieldAnnotation(SjField.class);
     }
     
     public static AnnotationCollection getInstance() {

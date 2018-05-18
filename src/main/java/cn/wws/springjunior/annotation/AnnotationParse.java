@@ -85,20 +85,14 @@ public class AnnotationParse {
         boolean ret = true;
         try {
             setAppointedPackage(appointedPackageName);
-            List<Class<?>> allClassList = getPackageClass(ORIGIN_ROOT_PACKAGE);
-            /**在原始根包路径上扫描基础注解*/
-            fillAnnotationMap(allClassList);
+            List<Class<?>> appoitedAllClassList = null;
             if (appointedPackage != null && !"".equals(appointedPackage.trim())) {
-                List<Class<?>> appoitedAllClassList = getPackageClass(appointedPackage);
-                /**合并原始根包路径和指定包根路径扫描到的class*/
-                mergeList(allClassList, appoitedAllClassList);
-                appoitedAllClassList = null;
+                appoitedAllClassList = getPackageClass(appointedPackage);
             } else {
                 throw new RuntimeException("扫描根路径为空，必须设置");
             }
             /**获取所有class中有增强标记的资源*/
-            fillEnhance(allClassList);
-            allClassList = null;
+            fillEnhance(appoitedAllClassList);
         } catch (Exception e) {
             ret = false;
             LOGGER.error("初始化异常，e={}", e);
@@ -120,26 +114,6 @@ public class AnnotationParse {
         fillEnhanceFieldMap(list);
     }
     
-    /**    
-    * @Description: 将originList和extraList合并到originList里. 
-    * @author songjun  
-    * @date 2018年4月12日   
-    * @param originList
-    * @param extraList
-    */ 
-    private static void mergeList(List<Class<?>> originList, List<Class<?>> extraList) {
-        if (originList != null) {
-            if (extraList != null) {
-                for (Class<?> clazz : extraList) {
-                    if (!originList.contains(clazz)) {
-                        originList.add(clazz);
-                    }
-                }
-            }
-        } else {
-            originList =  extraList;
-        }
-    }
     
     /**    
     * @Description: 根据包名返回对应class列表. 
@@ -217,35 +191,6 @@ public class AnnotationParse {
               }
           }  
       } 
-      
-      /**    
-    * @Description: 装载注解类集合. 
-    * @author songjun  
-    * @date 2018年4月11日   
-    * @param list
-    * @param set
-    */ 
-    @SuppressWarnings("unchecked")
-    private static void fillAnnotationMap(List<Class<?>> list) {
-          if (list == null || list.isEmpty()) {
-              return;
-          }
-          AnnotationCollection annotationCollection = AnnotationCollection.getInstance();
-          for (Class<?> clazs : list) {
-              if (clazs.isAnnotation()) {
-                  java.lang.annotation.Target an = clazs.getAnnotation(java.lang.annotation.Target.class);
-                  ElementType[] et = an.value();
-                  if (ElementType.TYPE.equals(et[0])) {
-                      annotationCollection.putClassAnnotation((Class<? extends Annotation>) clazs);
-                  } else if (ElementType.METHOD.equals(et[0])) {
-                      annotationCollection.putMethodAnnotation((Class<? extends Annotation>) clazs);
-                  } else if (ElementType.FIELD.equals(et[0])) {
-                      annotationCollection.putFieldAnnotation((Class<? extends Annotation>) clazs);
-                  }
-              }
-          }
-          LOGGER.debug("annotationCollection={}", annotationCollection);
-      }
       
     /**    
     * @Description: 装载增强标记类集合. 
