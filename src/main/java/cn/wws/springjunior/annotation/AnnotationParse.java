@@ -222,18 +222,11 @@ public class AnnotationParse {
                       sjClassMap.put(resourceName, enhanceClass);
                   } else if (SjAspect.class.getName().equals(annotation.getName())) {
                       SjAspect sj = clazz.getAnnotation(SjAspect.class);
-                      String resourceName = sj.value();
-                      if (resourceName == null || resourceName.trim().equals("")) {
-                          throw new RuntimeException(Joiner.on("").join("资源名称命名不能为空：", clazz.getName()));
-                      } else if (resourceName.contains(".")) {
-                          throw new RuntimeException(Joiner.on("").join("资源名称命名不能包含\".\"：", clazz.getName()));
-                      }
-                      enhanceClass.setAnnotationValue(resourceName);
-                      if (sjAspectMap.get(resourceName) != null) {
+                      if (sjAspectMap.get(clazz.getName()) != null) {
                           throw new RuntimeException(Joiner.on("").join("资源名称命名重复：", clazz.getName(), " & ", 
-                                  sjAspectMap.get(resourceName).getAnnotationTarget().getName()));
+                                  sjAspectMap.get(clazz.getName()).getAnnotationTarget().getName()));
                       }
-                      sjAspectMap.put(resourceName, enhanceClass);
+                      sjAspectMap.put(clazz.getName(), enhanceClass);
                   }
               }
           }

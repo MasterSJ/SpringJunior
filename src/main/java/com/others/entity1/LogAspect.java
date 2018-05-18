@@ -15,7 +15,7 @@ import cn.wws.springjunior.annotation.SjBefore;
 * @author songjun 
 * @date 2018年4月25日  
 */
-@SjAspect("LogAspect")
+@SjAspect
 public class LogAspect {
     @SjBefore("com.others.entity1.BeanOfAopTest.sing")
     public void before(Object[] args) {
