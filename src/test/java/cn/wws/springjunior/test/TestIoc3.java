@@ -1,7 +1,7 @@
 package cn.wws.springjunior.test;
 
 import cn.wws.springjunior.ioc.BeanFactory;
-import cn.wws.springjunior.test.entiry.Animal;
+import cn.wws.springjunior.test.entity.Animal;
 
 /**  
 * @ClassName: TestIoc3  
@@ -13,6 +13,6 @@ import cn.wws.springjunior.test.entiry.Animal;
 public class TestIoc3 {
     public static void main(String[] args) {
         Animal animal = BeanFactory.getBean("duck");
-        animal.bark();
+        animal.bark("唐老鸭");
     }
 }

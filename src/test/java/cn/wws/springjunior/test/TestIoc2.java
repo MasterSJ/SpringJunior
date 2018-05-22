@@ -1,7 +1,7 @@
 package cn.wws.springjunior.test;
 
 import cn.wws.springjunior.ioc.BeanFactory;
-import cn.wws.springjunior.test.entiry.Cat;
+import cn.wws.springjunior.test.entity.Cat;
 
 /**  
 * @ClassName: TestIoc2  

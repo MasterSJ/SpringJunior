@@ -1,7 +1,7 @@
 package cn.wws.springjunior.test;
 
 import cn.wws.springjunior.ioc.BeanFactory;
-import cn.wws.springjunior.test.entiry.Dog;
+import cn.wws.springjunior.test.entity.Dog;
 
 
 /**  

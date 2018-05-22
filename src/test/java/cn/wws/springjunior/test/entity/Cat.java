@@ -1,4 +1,4 @@
-package cn.wws.springjunior.test.entiry;
+package cn.wws.springjunior.test.entity;
 
 import cn.wws.springjunior.annotation.SjClass;
 import cn.wws.springjunior.annotation.SjField;
