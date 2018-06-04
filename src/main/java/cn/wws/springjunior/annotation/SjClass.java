@@ -15,4 +15,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SjClass {
     String value();
+    String isSingleton() default "true";
 }

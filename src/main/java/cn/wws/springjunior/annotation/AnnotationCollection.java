@@ -22,6 +22,7 @@ public final class AnnotationCollection {
     private Set<Class<? extends Annotation>> fieldAnnotations;
     
     private static AnnotationCollection singleInstance;
+    private static Object lock = new Object();
     
     private AnnotationCollection() {
         classAnnotations = new HashSet<Class<? extends Annotation>>();
@@ -37,13 +38,11 @@ public final class AnnotationCollection {
     
     public static AnnotationCollection getInstance() {
         if (singleInstance == null) {
-            Object object = new Object();
-            synchronized (object) {
+            synchronized (lock) {
                 if (singleInstance == null) {
                     singleInstance = new AnnotationCollection();
                 }
             }
-            object = null;
         }
         return singleInstance;
     }

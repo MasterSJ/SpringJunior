@@ -40,7 +40,7 @@ public class CGLIBProxy implements MethodInterceptor {
                 proxyEntity.getMethod().toString().indexOf("("));
         for (Map.Entry<String, EnhanceMethod> map : methodMap.entrySet()) {
             String methodName = getMethodName(map.getValue().getAnnotationValue());
-            if (methodName.equals(proxyMethodValue)) {
+            if (proxyMethodValue.startsWith(methodName)) {
                 String toIntance = map.getKey();
                 int offset = toIntance.lastIndexOf(".");
                 String className = toIntance.substring(0, offset);

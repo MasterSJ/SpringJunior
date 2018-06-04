@@ -101,7 +101,12 @@ public class BeanFactory {
                 /**是抽象类*/
                 throw new RuntimeException(Joiner.on("").join(beanName, "是抽象类，必须在注入时指定一个实现类对其实例化"));
             }
-            obj = clazz.newInstance();
+            if (SjClassUtil.isSingleton(beanName)) {
+                obj = SingletonBeanCollection.getInstance().getBean(clazz.getName());
+            } else {
+                obj = clazz.newInstance();
+            }
+            
             /*处理aop关系，这一步要在injectField(obj)之前执行*/
             obj = doAopHandle(obj);
             /*给field注入值*/
@@ -109,6 +114,8 @@ public class BeanFactory {
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return (T) obj;
