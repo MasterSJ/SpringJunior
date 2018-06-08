@@ -2,7 +2,7 @@ package cn.wws.springjunior.test.entity;
 
 import cn.wws.springjunior.annotation.SjClass;
 
-@SjClass("dog")
+@SjClass(value="dog",isSingleton="true")
 public class Dog {
     public int p = 1;
     

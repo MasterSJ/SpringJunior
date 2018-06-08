@@ -131,8 +131,21 @@ public class BeanFactory {
     */ 
     private static Object doAopHandle(Object obj) {
         Map<String, EnhanceMethod> methodMap = AnnotationParse.getSjBeforeMap();
-        for (Map.Entry<String, EnhanceMethod> map : methodMap.entrySet()) {
-            String toIntance = map.getValue().getAnnotationValue();
+        for (Map.Entry<String, EnhanceMethod> entry : methodMap.entrySet()) {
+            String toIntance = entry.getValue().getAnnotationValue();
+            int offset = toIntance.lastIndexOf(".");
+            String className = toIntance.substring(0, offset);
+            if (className.equals(obj.getClass().getName())) {
+                try {
+                    return new CGLIBProxy(obj).getProxy();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        methodMap = AnnotationParse.getSjAfterMap();
+        for (Map.Entry<String, EnhanceMethod> entry : methodMap.entrySet()) {
+            String toIntance = entry.getValue().getAnnotationValue();
             int offset = toIntance.lastIndexOf(".");
             String className = toIntance.substring(0, offset);
             if (className.equals(obj.getClass().getName())) {
