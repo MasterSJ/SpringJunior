@@ -10,6 +10,12 @@ public class PersonAspect {
     public void alermRing(Object[] args) {
         System.out.println(args[0] + "的闹钟响啦");
     }
+
+    @SjBefore("cn.wws.springjunior.test.entity.Person.gotoSchool()")
+    public void beforeGotoSchool(Object[] args) {
+        System.out.println(args[0] + "准备去学校啦");
+    }
+    
     @SjAfter("cn.wws.springjunior.test.entity.Person")
     public void alermClosed(Object[] args) {
         System.out.println(args[0] + "已经搞定啦");
