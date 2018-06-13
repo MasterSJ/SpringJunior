@@ -204,7 +204,7 @@ public class AnnotationParse {
         for (Class<?> clazz : list) {
           for (Class<? extends Annotation> annotation : classAnnotationSet) {
               if (clazz.isAnnotationPresent(annotation)) {
-                  EnhanceClass enhanceClass = new EnhanceClass(annotation.getName(), clazz);
+                  EnhanceClass enhanceClass = new EnhanceClass(clazz);
                   if (SjClass.class.getName().equals(annotation.getName())) {
                       SjClass sj = clazz.getAnnotation(SjClass.class);
                       String resourceName = sj.value();
@@ -257,12 +257,12 @@ public class AnnotationParse {
                         } else if (annotation.getName().equals(SjBefore.class.getName())) {
                             SjBefore sj = method.getAnnotation(SjBefore.class);
                             String methodValue = sj.value();
-                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), methodValue, method);
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(methodValue, method);
                             sjBeforeMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
                         } else if (annotation.getName().equals(SjAfter.class.getName())) {
                             SjAfter sj = method.getAnnotation(SjAfter.class);
                             String methodValue = sj.value();
-                            EnhanceMethod enhanceMethod = new EnhanceMethod(annotation.getName(), methodValue, method);
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(methodValue, method);
                             sjAfterMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
                         }
                     }
@@ -296,7 +296,7 @@ public class AnnotationParse {
                                 throw new RuntimeException(Joiner.on("").join("资源名称命名不能包含\".\"：", clazz.getName()));
                             }
                             checkJavaBaseType(clazz, field);
-                            EnhanceField enhanceField = new EnhanceField(annotation.getName(), field, clazz.getName(), resourceName);
+                            EnhanceField enhanceField = new EnhanceField(field, clazz.getName(), resourceName);
                             sjFieldMap.put(Joiner.on("").join(clazz.getName(), ".", field.getName()), enhanceField);
                         }
                     }

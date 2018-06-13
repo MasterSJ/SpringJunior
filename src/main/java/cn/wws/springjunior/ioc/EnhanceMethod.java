@@ -12,27 +12,18 @@ import com.google.common.base.Joiner;
 *    
 */
 public class EnhanceMethod {
-    private String annotationName;
     private String annotationValue;
     private Method annotationTarget;
     
-    public EnhanceMethod(String annoName, Method annoTarget) {
-        this.annotationName = annoName;
+    public EnhanceMethod(Method annoTarget) {
         this.annotationTarget = annoTarget;
     }
     
-    public EnhanceMethod(String annoName, String annotationValue, Method annoTarget) {
-        this.annotationName = annoName;
+    public EnhanceMethod(String annotationValue, Method annoTarget) {
         this.annotationValue = annotationValue;
         this.annotationTarget = annoTarget;
     }
     
-    public String getAnnotationName() {
-        return annotationName;
-    }
-    public void setAnnotationName(String annotationName) {
-        this.annotationName = annotationName;
-    }
     public Method getAnnotationTarget() {
         return annotationTarget;
     }
@@ -47,7 +38,7 @@ public class EnhanceMethod {
     }
     
     public String toString() {
-        return Joiner.on("").join("{annotationName=", annotationName, "; annotationValue=", 
+        return Joiner.on("").join("{annotationValue=", 
                 annotationValue == null ? "" : annotationValue, "; annotationTarget=", annotationTarget, "}");
     }
 }

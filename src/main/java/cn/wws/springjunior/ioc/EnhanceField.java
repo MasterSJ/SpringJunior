@@ -16,7 +16,6 @@ import cn.wws.springjunior.annotation.AnnotationParse;
 *    
 */
 public class EnhanceField {
-    private String annotationName;
     private Field annotationTarget;
     private String parentClassName;
     private String annotationValue;
@@ -55,8 +54,7 @@ public class EnhanceField {
     
     
 
-    public EnhanceField(String annoName, Field annoTarget, String parentClassName, String annotationValue) {
-        this.annotationName = annoName;
+    public EnhanceField(Field annoTarget, String parentClassName, String annotationValue) {
         this.annotationTarget = annoTarget;
         this.parentClassName = parentClassName;
         this.annotationValue = annotationValue;
@@ -70,12 +68,6 @@ public class EnhanceField {
         this.parentClassName = parentClassName;
     }
     
-    public String getAnnotationName() {
-        return annotationName;
-    }
-    public void setAnnotationName(String annotationName) {
-        this.annotationName = annotationName;
-    }
     public Field getAnnotationTarget() {
         return annotationTarget;
     }
@@ -92,7 +84,7 @@ public class EnhanceField {
     }
     
     public String toString() {
-        return Joiner.on("").join("{annotationName=", annotationName, "; annotationTarget=", annotationTarget,
+        return Joiner.on("").join("{annotationTarget=", annotationTarget,
                 "; parentClassName=", parentClassName, "; annotationValue=", annotationValue, "}");
     }
 }
