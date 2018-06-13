@@ -1,7 +1,7 @@
 package cn.wws.springjunior.test;
 
 import cn.wws.springjunior.ioc.BeanFactory;
-import cn.wws.springjunior.test.entity.Dog;
+import cn.wws.springjunior.test.entity.Bird;
 
 /**  
 * @ClassName: TestIoc5  
@@ -12,11 +12,15 @@ import cn.wws.springjunior.test.entity.Dog;
 */
 public class TestIoc5 {
     public static void main(String[] args) {
-        Dog dog = BeanFactory.getBean("dog");
-        System.out.println("dog.p=" + dog.p);
-        dog.bark();
-        dog.p = 2;
-        Dog dog2 = BeanFactory.getBean("dog");
-        System.out.println("dog2.p=" + dog2.p);
+        Bird bird = BeanFactory.getBean("bird");
+        System.out.println("bird.number=" + bird.number);
+        bird.bark();
+        
+        System.out.println("-----------------------------");
+        
+        bird.number = 2;
+        Bird bird2 = BeanFactory.getBean("bird");
+        System.out.println("bird2.number=" + bird2.number);
+        bird2.bark();
     }
 }
