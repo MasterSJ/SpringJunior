@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import com.google.common.base.Joiner;
 
 import cn.wws.springjunior.annotation.AnnotationParse;
+import cn.wws.springjunior.aop.AopHandler;
 import cn.wws.springjunior.aop.CGLIBProxy;
 
 /**  
@@ -108,7 +109,7 @@ public class BeanFactory {
             }
             
             /*处理aop关系，这一步要在injectField(obj)之前执行*/
-            obj = doAopHandle(obj);
+            obj = AopHandler.doAopHandle(obj);
             /*给field注入值*/
             injectField(obj);
         } catch (InstantiationException e) {
@@ -121,42 +122,6 @@ public class BeanFactory {
         return (T) obj;
     }
     
-    /**    
-    * @Description: 处理aop.
-    * 这里判断是否需要做aop处理，跟aop处理中判断处理哪一个方法差不多，后续考虑简化一下 
-    * @author songjun  
-    * @date 2018年5月17日   
-    * @param obj
-    * @return
-    */ 
-    private static Object doAopHandle(Object obj) {
-        Map<String, EnhanceMethod> methodMap = AnnotationParse.getSjBeforeMap();
-        for (Map.Entry<String, EnhanceMethod> entry : methodMap.entrySet()) {
-            String toIntance = entry.getValue().getAnnotationValue();
-            int offset = toIntance.lastIndexOf(".");
-            String className = toIntance.substring(0, offset);
-            if (className.equals(obj.getClass().getName())) {
-                try {
-                    return new CGLIBProxy(obj).getProxy();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        methodMap = AnnotationParse.getSjAfterMap();
-        for (Map.Entry<String, EnhanceMethod> entry : methodMap.entrySet()) {
-            String toIntance = entry.getValue().getAnnotationValue();
-            int offset = toIntance.lastIndexOf(".");
-            String className = toIntance.substring(0, offset);
-            if (className.equals(obj.getClass().getName())) {
-                try {
-                    return new CGLIBProxy(obj).getProxy();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return obj;
-    }
+    
     
 }
