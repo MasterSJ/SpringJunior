@@ -13,6 +13,6 @@ import cn.wws.springjunior.test.entity.Tiger;
 public class TestIoc4 {
     public static void main(String[] args) {
         Tiger tiger = BeanFactory.getBean("tiger");
-        tiger.bark();
+        tiger.roar();
     }
 }

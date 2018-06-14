@@ -4,8 +4,8 @@ import cn.wws.springjunior.annotation.SjClass;
 
 @SjClass("tiger")
 public class Tiger extends Cat {
-    public void bark() {
-        super.bark();
+    public void roar() {
+        bark();
         System.out.println("哇呜");
     }
 }

@@ -2,6 +2,7 @@ package cn.wws.springjunior.test;
 
 import cn.wws.springjunior.ioc.BeanFactory;
 import cn.wws.springjunior.test.entity.Animal;
+import cn.wws.springjunior.test.entity.Chook;
 
 /**  
 * @ClassName: TestIoc3  
@@ -12,7 +13,7 @@ import cn.wws.springjunior.test.entity.Animal;
 */
 public class TestIoc3 {
     public static void main(String[] args) {
-        Animal animal = BeanFactory.getBean("duck");
-        animal.bark("唐老鸭");
+        Chook chook = BeanFactory.getBean("chook");
+        chook.bark();
     }
 }
