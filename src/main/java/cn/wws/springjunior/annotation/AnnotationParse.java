@@ -29,6 +29,8 @@ import cn.wws.springjunior.ioc.EnhanceClass;
 import cn.wws.springjunior.ioc.EnhanceField;
 import cn.wws.springjunior.ioc.EnhanceMethod;
 import cn.wws.springjunior.ioc.SjClassMapped;
+import cn.wws.springjunior.itf.SjInputOutputInterface;
+import cn.wws.springjunior.util.DefultInputOutput;
 
 
 /**  
@@ -53,8 +55,12 @@ public class AnnotationParse {
     private static Map<String, EnhanceMethod> sjBeforeMap = new HashMap<String, EnhanceMethod>();
     /**被sjAfter注解标记的方法*/
     private static Map<String, EnhanceMethod> sjAfterMap = new HashMap<String, EnhanceMethod>();
+    /**被sjPerformanceAnalysisMap注解标记的方法*/
+    private static Map<String, EnhanceMethod> sjPerformanceAnalysisMap = new HashMap<String, EnhanceMethod>();
     /**被sjAspect注解标记的方法*/
     private static Map<String, EnhanceClass> sjAspectMap = new HashMap<String, EnhanceClass>();
+    /**系统参数*/
+    private static Map<String, Object> sjSystemParam = new HashMap<String, Object>();
     
     static {
         init(SjConfigure.getAppointedPackageName());
@@ -80,6 +86,17 @@ public class AnnotationParse {
         return sjAfterMap;
     }
     
+    public static Map<String, EnhanceMethod> getSjPerformanceAnalysisMap() {
+        return sjPerformanceAnalysisMap;
+    }
+    
+    public static Object getSjSystemParam(String key) {
+        if (sjSystemParam != null) {
+            return sjSystemParam.get(key);
+        }
+        return null;
+    }
+    
     public static boolean init(String appointedPackageName) {
         boolean ret = true;
         try {
@@ -92,6 +109,8 @@ public class AnnotationParse {
             }
             /**获取所有class中有增强标记的资源*/
             fillEnhance(appoitedAllClassList);
+            /**填充系统参数*/
+            fillSystemParam(appoitedAllClassList);
         } catch (Exception e) {
             ret = false;
             LOGGER.error("初始化异常，e={}", e);
@@ -111,6 +130,33 @@ public class AnnotationParse {
         fillEnhanceClassMap(list);
         fillEnhanceMethodMap(list);
         fillEnhanceFieldMap(list);
+    }
+    
+    private static void fillSystemParam(List<Class<?>> appoitedAllClassList) {
+        ArrayList<Class> list = SystemParam.getAllClassByInterface(SjInputOutputInterface.class, appoitedAllClassList);
+        if (list == null || list.isEmpty()) {
+            LOGGER.error("没有找到SjInputOutputInterface的自定义实现类，使用默认实现类");
+            sjSystemParam.put("defaultInputOutput", new DefultInputOutput());
+        } else if (list.size() == 1) {
+            Class clazz = (Class) list.get(0);
+            try {
+                sjSystemParam.put("defaultInputOutput", clazz.newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Class clazz = (Class) list.get(0);
+            LOGGER.error("SjInputOutputInterface存在多个自定义实现类，使用：{}", clazz);
+            try {
+                sjSystemParam.put("defaultInputOutput", clazz.newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
     
     
@@ -263,6 +309,11 @@ public class AnnotationParse {
                             String methodValue = sj.value();
                             EnhanceMethod enhanceMethod = new EnhanceMethod(methodValue, method);
                             sjAfterMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
+                        } else if (annotation.getName().equals(SjPerformanceAnalysis.class.getName())) {
+                            SjPerformanceAnalysis sj = method.getAnnotation(SjPerformanceAnalysis.class);
+                            String methodValue = sj.value();
+                            EnhanceMethod enhanceMethod = new EnhanceMethod(methodValue, method);
+                            sjPerformanceAnalysisMap.put(Joiner.on("").join(clazz.getName(), ".", method.getName()), enhanceMethod);
                         }
                     }
                 }
@@ -272,6 +323,7 @@ public class AnnotationParse {
         LOGGER.debug("sjMethodMap={}", sjMethodMap);
         LOGGER.debug("sjBeforeMap={}", sjBeforeMap);
         LOGGER.debug("sjAfterMap={}", sjAfterMap);
+        LOGGER.debug("sjPerformanceAnalysisMap={}", sjPerformanceAnalysisMap);
     }
     
     /**    

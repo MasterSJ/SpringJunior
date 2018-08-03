@@ -48,6 +48,19 @@ public class AopHandler {
                  }
              }
          }
+         methodMap = AnnotationParse.getSjPerformanceAnalysisMap();
+         for (Map.Entry<String, EnhanceMethod> entry : methodMap.entrySet()) {
+             String toIntance = entry.getKey();
+             int offset = toIntance.lastIndexOf(".");
+             String className = toIntance.substring(0, offset);
+             if (className.equals(obj.getClass().getName())) {
+                 try {
+                     return new CGLIBProxy(obj).getProxy();
+                 } catch (ClassNotFoundException e) {
+                     e.printStackTrace();
+                 }
+             }
+         }
          return obj;
      }
 }

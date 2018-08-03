@@ -13,7 +13,7 @@ import cn.wws.springjunior.test.entity.Person;
 public class TestAop1 {
 	public static void main(String[] args) {
         Person person = BeanFactory.getBean("person");
-        person.getUp("小冰");
         person.gotoSchool("小冰");
+        person.getUp("小冰");
     }
 }

@@ -31,6 +31,7 @@ public final class AnnotationCollection {
         methodAnnotations.add(SjMethod.class);
         methodAnnotations.add(SjBefore.class);
         methodAnnotations.add(SjAfter.class);
+        methodAnnotations.add(SjPerformanceAnalysis.class);
         fieldAnnotations = new HashSet<Class<? extends Annotation>>();
         fieldAnnotations.add(SjField.class);
     }
