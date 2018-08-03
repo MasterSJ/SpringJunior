@@ -223,7 +223,6 @@ public class AnnotationParse {
                       sjClassMap.put(resourceName, enhanceClass);
                       SjClassMapped.putMappedRelation(clazz.getName(), resourceName);
                   } else if (SjAspect.class.getName().equals(annotation.getName())) {
-                      SjAspect sj = clazz.getAnnotation(SjAspect.class);
                       if (sjAspectMap.get(clazz.getName()) != null) {
                           throw new RuntimeException(Joiner.on("").join("资源名称命名重复：", clazz.getName(), " & ", 
                                   sjAspectMap.get(clazz.getName()).getAnnotationTarget().getName()));
